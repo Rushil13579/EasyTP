@@ -5,5 +5,5 @@ branches:
 projects:
   EasyTP:
     path: ""
-    logo: EasyTP.png
+    icon: EasyTP.png
 ...
