@@ -6,11 +6,12 @@ version: 1.0.0
 commands:
   tpa:
     description: Send a tp request to a player!
+    aliases: [tpask, tpo, tpover]
   tpahere:
     description: Send a tphere request to a player!
   tpaccept:
     description: Accept a tp request from a player!
-    aliases: [tpyes]
+    aliases: [tpyes, tpok]
   tpdeny:
     description: Deny a tp request from a player!
-    aliases: [tpno]
+    aliases: [tpno, tpdecline]

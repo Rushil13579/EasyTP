@@ -22,9 +22,17 @@ class EasyTP extends PluginBase {
 
   public function levelCheck($player){
     $level = $player->getLevel()->getName();
+
     if(in_array($level, $this->getConfig()->get('no-tp-levels'))){
       $player->sendMessage('§cThis command is banned in this level');
       return null;
+    }
+
+    foreach(array_keys($this->getConfig()->get('blacklist-contains')) as $key){
+      if(strpos($this->getConfig()->get('blaclist-contains'), $player->getLevel()->getName())){
+        $player->sendMessage('§cThis command is banned in this level');
+        return null;
+      }
     }
     return true;
   }

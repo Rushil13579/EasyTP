@@ -1,9 +1,14 @@
 # Configuration file for EasyTP by Rushil13579
 
 # List of levels where the commands of this plugin are banned
-no-easytp-levels:
+blacklist-levels:
   - world1
   - world2
+
+# If the world name contains these words the commands of the plugin will be banned there
+blacklist-contains:
+  - notp
+  - island
 
 # Cooldown for the tpa/tpahere commands
 # Must me a numeric value
