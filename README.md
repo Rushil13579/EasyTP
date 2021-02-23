@@ -8,24 +8,9 @@ A TP request plugin for PocketMine 3.0.0 and above
 Commands | Aliases | Description
 ---------|---------|------------
 /tpa | [/tpask, /tpo, tpover] | Send a tp request to a fellow player
-
-
-
-- /tpa:
-    aliases: [/tpask, /tpo, /tpover]
-    description: Send a tp request to a fellow player
-
-- /tpahere:
-    aliases: none
-    description: Send a tphere request to a fellow player
-
-- /tpaccept:
-    aliases: [/tpyes, /tpok]
-    descripiton: Accept a tp request from a player
-
-- /tpdeny:
-    aliases: [/tpno, /tpdecline]
-    description: Decline a tp request from a player
+/tpahere | none | Send a tphere request to a fellow player
+/tpaccept | [/tpyes, /tpok] | Accept a tp request from a player
+/tpdeny | [/tpno, /tpdecline] | Decline a tp request from a player
 
 ## Credits
 - @Rushil13579
