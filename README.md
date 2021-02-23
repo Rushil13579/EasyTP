@@ -1,8 +1,8 @@
 # EasyTP
 A TP request plugin for PocketMine 3.0.0 and above
 
-If you have any suggestions/ideas/questions feel free to contact me on discord at **Rushil#2326**
-If you find any bugs you can report them [here](https://github.com/Rushil13579/EasyTP/issues)
+- If you have any suggestions/ideas/questions feel free to contact me on discord at **Rushil#2326**
+- If you find any bugs you can report them [here](https://github.com/Rushil13579/EasyTP/issues)
 
 ## Commands
 - /tpa:
