@@ -18,8 +18,7 @@ A TP request plugin for PocketMine 3.0.0 and above
     aliases: [/tpno, /tpdecline]
     description: Decline a tp request from a player
 
-## Config
-### Configuration file for EasyTP by Rushil13579
+## Configuration 
 
 ### List of levels where the commands of this plugin are banned
 no-easytp-levels:
