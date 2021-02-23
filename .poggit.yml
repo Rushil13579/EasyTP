@@ -5,5 +5,5 @@ branches:
 projects:
   EasyTP:
     path: ""
-    logo: "path/image.png"
+    logo: "image.png"
 ...
