@@ -5,6 +5,12 @@ A TP request plugin for PocketMine 3.0.0 and above
 - If you find any bugs you can report them [here](https://github.com/Rushil13579/EasyTP/issues)
 
 ## Commands
+Commands | Aliases | Description
+---------|---------|------------
+/tpa | [/tpask, /tpo, tpover] | Send a tp request to a fellow player
+
+
+
 - /tpa:
     aliases: [/tpask, /tpo, /tpover]
     description: Send a tp request to a fellow player
