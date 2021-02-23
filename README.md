@@ -19,14 +19,14 @@ A TP request plugin for PocketMine 3.0.0 and above
     description: Decline a tp request from a player
 
 ## Config
-# Configuration file for EasyTP by Rushil13579
+### Configuration file for EasyTP by Rushil13579
 
-# List of levels where the commands of this plugin are banned
+### List of levels where the commands of this plugin are banned
 no-easytp-levels:
   - world1
   - world2
 
-# Cooldown for the tpa/tpahere commands
-# Must me a numeric value
-# Set to '0' to disable
+### Cooldown for the tpa/tpahere commands
+### Must me a numeric value
+### Set to '0' to disable
 tp-cooldown: 15
