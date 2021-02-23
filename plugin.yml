@@ -1,0 +1,16 @@
+name: EasyTP
+main: Rushil13579\EasyTP\EasyTP
+api: 3.0.0
+version: 1.0.0
+
+commands:
+  tpa:
+    description: Send a tp request to a player!
+  tpahere:
+    description: Send a tphere request to a player!
+  tpaccept:
+    description: Accept a tp request from a player!
+    aliases: [tpyes]
+  tpdeny:
+    description: Deny a tp request from a player!
+    aliases: [tpno]
