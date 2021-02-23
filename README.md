@@ -1,6 +1,9 @@
 # EasyTP
 A TP request plugin for PocketMine 3.0.0 and above
 
+If you have any suggestions/ideas/questions feel free to contact me on discord at **Rushil#2326**
+If you find any bugs you can report them [here](https://github.com/Rushil13579/EasyTP/issues)
+
 ## Commands
 - /tpa:
     aliases: [/tpask, /tpo, /tpover]
@@ -18,14 +21,5 @@ A TP request plugin for PocketMine 3.0.0 and above
     aliases: [/tpno, /tpdecline]
     description: Decline a tp request from a player
 
-## Configuration 
-
-### List of levels where the commands of this plugin are banned
-no-easytp-levels:
-  - world1
-  - world2
-
-### Cooldown for the tpa/tpahere commands
-### Must me a numeric value
-### Set to '0' to disable
-tp-cooldown: 15
+## Credits
+- @Rushil13579
