@@ -1,17 +1,31 @@
 name: EasyTP
 main: Rushil13579\EasyTP\EasyTP
 api: 3.0.0
-version: 1.0.0
+version: 1.1.0
 
 commands:
   tpa:
     description: Send a tp request to a player!
-    aliases: [tpask, tpo, tpover]
+    aliases: [tpask]
   tpahere:
     description: Send a tphere request to a player!
+    aliases: [tph]
   tpaccept:
     description: Accept a tp request from a player!
     aliases: [tpyes, tpok]
   tpdeny:
     description: Deny a tp request from a player!
     aliases: [tpno, tpdecline]
+  tphere:
+    description: Tp a player to your position!
+  tpall:
+    description: Tp all online players to your position!
+
+permissions:
+  easytp.command.*:
+    description: Allows access to all EasyTP commands!
+    children:
+      easytp.command.tphere:
+        description: Allows a player to use tphere!
+      easytp.command.tpall:
+        description: Allows a player to use tpall!

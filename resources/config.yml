@@ -1,5 +1,10 @@
 # Configuration file for EasyTP by Rushil13579
 
+# Use '&' for color
+
+# Version [DONT TOUCH]
+version: 1.1.0
+
 # List of levels where the commands of this plugin are banned
 blacklist-levels:
   - world1
@@ -14,3 +19,53 @@ blacklist-contains:
 # Must me a numeric value
 # Set to '0' to disable
 tp-cooldown: 15
+
+# ========== MESSAGES ==========
+
+# GLOBAL VARIABLES
+# {PREFIX} -> Plugin Prefix
+# \n -> Line break
+
+
+# Message sent when the command is executed in a blacklisted level
+blacklisted-level-msg: "{PREFIX} &cThis command is banned in this level"
+
+
+# Message sent when the tpa/tpahere command is on cooldown [Use {REMAINING} for the remaining time in seconds]
+tp-cooldown-msg: "{PREFIX} &cYou are on cooldown for {REMAINING} seconds"
+
+
+# Message sent to the player sending the tpa request [Use {RECEIVER} for the player the tpa request is being sent to]
+tpa-request-sender-msg: "{PREFIX} &7You have sent a tpa request to &6{RECEIVER}"
+
+
+# Message sent to the player receiving the tpa request [USE {REQUESTER} for the player sending the tpa request]
+tpa-request-receiver-msg: "{PREFIX} &7You have received a tpa request from &6{REQUESTER}\n&7Do &6/tpaccept {REQUESTER} &7to accept the request or &6/tpdeny {REQUESTER} &7to deny the request"
+
+
+# Message sent to the player sending the tpahere request [Use {RECEIVER} for the player the tpahere request is being sent to]
+tpahere-request-sender-msg: "{PREFIX} &7You have sent a tpahere request to &6{RECEIVER}"
+
+
+# Message sent to the player receiving the tpahere request [USE {REQUESTER} for the player sending the tpahere request]
+tpahere-request-receiver-msg: "{PREFIX} &7You have received a tpahere request from &6{REQUESTER}\n&7Do &6/tpaccept {REQUESTER} &7to accept the request or &6/tpdeny {REQUESTER} &7to deny the request"
+
+
+# Message sent when no tp request exists from a player [USE {TARGET} for the player whoes tp request was being denied]
+no-tp-request-exists-msg: "{PREFIX} &cYou do not have a tp request from {TARGET}"
+
+
+# Message sent when a player is being teleported
+teleporting-msg: "{PREFIX} &aTeleporting..."
+
+
+# Message sent when a player tries to send a tp request to himself
+no-self-tp-request: "{PREFIX} &cYou cannot send yourself a tp request"
+
+
+# Message sent to the request receiver when he/she denies the request [Use {REQUESTER} for the player who sent the tp request]
+request-denied-receiver-msg: "{PREFIX} &cYou have denied a tp request from {REQUESTER}"
+
+
+# Message sent to the request sender when the request receiver denies the request [Use {RECEIVER} for the player who denied the request]
+request-denied-requester-msg: "{PREFIX} &c{RECEIVER} has denied your tp request"
