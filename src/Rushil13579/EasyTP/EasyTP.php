@@ -6,32 +6,51 @@ use pocketmine\{Player, Server};
 
 use pocketmine\plugin\PluginBase;
 
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerJoinEvent;
+
 use pocketmine\command\{Command, CommandSender};
+
+use pocketmine\level\Level;
 
 use pocketmine\utils\{Config, TextFormat as C};
 
-class EasyTP extends PluginBase {
+class EasyTP extends PluginBase implements Listener {
 
   public $cfg;
+  public $block;
 
   public $tp = [];
   public $tpcd = [];
+  public $status = [];
 
-  public const PREFIX = '§3[§bEasyTP§3]';
+  const PREFIX = '§3[§bEasyTP§3]';
 
   public function onEnable(){
+    $this->getServer()->getPluginManager()->registerEvents($this, $this);
+
     $this->saveDefaultConfig();
     $this->getResource('config.yml');
 
     $this->cfg = $this->getConfig();
 
+    $this->block = new Config($this->getDataFolder() . 'BlockedPlayers.yml', Config::YAML);
+
     $this->versionCheck();
   }
 
   public function versionCheck(){
-    if($this->cfg->get('version') !== '1.1.0'){
+    if($this->cfg->get('version') !== '1.2.0'){
       $this->getLogger()->warning(self::PREFIX . ' §cThe current configuration file is outdated. Please delete it and restart the server to install the latest configuration file!');
       $this->getServer()->getPluginManager()->disablePlugin($this);
+    }
+  }
+
+  public function onJoin(PlayerJoinEvent $ev){
+    $player = $ev->getPlayer();
+    if(!$this->block->exists($player->getName())){
+      $this->block->set($player->getName(), []);
+      $this->block->save();
     }
   }
 
@@ -75,6 +94,20 @@ class EasyTP extends PluginBase {
     return true;
   }
 
+  public function statusCheck($target){
+    if(!isset($this->status[$target->getName()])){
+      return ' ';
+    }
+    return null;
+  }
+
+  public function blockCheck($player, $target){
+    if(!in_array($player->getName(), $this->block->get($target->getName()))){
+      return ' ';
+    }
+    return null;
+  }
+
   public function tpRequest($player, $target, $type){
     $levelcheck = $this->levelCheck($player);
     if($levelcheck === null){
@@ -83,6 +116,18 @@ class EasyTP extends PluginBase {
 
     $cooldowncheck = $this->cooldownCheck($player);
     if($cooldowncheck === null){
+      return null;
+    }
+
+    $statuscheck = $this->statusCheck($target);
+    if($statuscheck === null){
+      $player->sendMessage(C::colorize(str_replace(['{PREFIX}', '{RECEIVER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tp-closed-msg'))));
+      return null;
+    }
+
+    $blockcheck = $this->blockCheck($player, $target);
+    if($blockcheck === null){
+      $player->sendMessage(C::colorize(str_replace(['{PREFIX}', '{RECEIVER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tp-blocked-msg'))));
       return null;
     }
 
@@ -240,6 +285,23 @@ class EasyTP extends PluginBase {
     }
 
     switch($cmd->getName()){
+      case 'tpwithdraw':
+
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+
+        if(!isset($this->tp[$s->getName()])){
+          $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('tp-request-absent-msg'))));
+          return false;
+        }
+
+        unset($this->tp[$s->getName()]);
+        $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('tp-request-withdrawn-msg'))));
+    }
+
+    switch($cmd->getName()){
       case 'tphere':
 
       if(!$s instanceof Player){
@@ -286,6 +348,141 @@ class EasyTP extends PluginBase {
       }
 
       $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('teleporting-msg'))));
+    }
+
+    switch($cmd->getName()){
+      case 'tpopen':
+      
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+
+        unset($this->status[$s->getName()]);
+        
+        $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('tp-turned-open-msg'))));
+    }
+
+    switch($cmd->getName()){
+      case 'tpclose':
+      
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+
+        $this->status[$s->getName()] = 'open';
+        
+        $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('tp-turned-close-msg'))));
+    }
+
+    switch($cmd->getName()){
+      case 'tpblock':
+
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+
+        if(!isset($args[0])){
+          $s->sendMessage(self::PREFIX . ' §cUsage: /tpblock [player]');
+          return null;
+        }
+
+        if($this->getServer()->getPlayer($args[0]) === null){
+          $s->sendMessage(self::PREFIX . ' §cPlayer not found');
+          return false;
+        }
+
+        $player = $this->getServer()->getPlayer($args[0]);
+
+        if(empty($this->block->get($s->getName()))){
+          $list[] = $player->getName();
+          $this->block->set($s->getName(), $list);
+          $this->block->save();
+
+          $s->sendMessage(C::colorize(str_replace(['{PREFIX}', '{BLOCKED_PLAYER}'], [self::PREFIX, $player->getName()], $this->cfg->get('blocked-player-msg'))));
+          return false;
+        }
+
+        if(in_array($player->getName(), $this->block->get($s->getName()))){
+          $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('already-blocked-msg'))));
+          return false;
+        }
+
+        $list = $this->block->get($s->getName());
+        $list[] = $player->getName();
+        $this->block->set($s->getName(), $list);
+        $this->block->save();
+
+        $s->sendMessage(C::colorize(str_replace(['{PREFIX}', '{BLOCKED_PLAYER}'], [self::PREFIX, $player->getName()], $this->cfg->get('blocked-player-msg'))));
+    }
+
+    switch($cmd->getName()){
+      case 'tpunblock':
+
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+
+        if(!isset($args[0])){
+          $s->sendMessage(self::PREFIX . ' §cUsage: /tpblock [player]');
+          return null;
+        }
+
+        if($this->getServer()->getPlayer($args[0]) === null){
+          $s->sendMessage(self::PREFIX . ' §cPlayer not found');
+          return false;
+        }
+
+        $player = $this->getServer()->getPlayer($args[0]);
+
+        if(empty($this->block->get($s->getName()))){
+          $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('not-blocked-msg'))));
+          return false;
+        }
+
+        if(!in_array($player->getName(), $this->block->get($s->getName()))){
+          $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('not-blocked-msg'))));
+          return false;
+        }
+
+        $list = $this->block->get($s->getName());
+        $key = array_search($player->getName(), $list);
+        array_splice($list, $key, 1);
+        $this->block->set($s->getName(), $list);
+        $this->block->save();
+        $s->sendMessage(C::colorize(str_replace(['{PREFIX}', '{UNBLOCKED_PLAYER}'], [self::PREFIX, $player->getName()], $this->cfg->get('unblocked-player-msg'))));
+    }
+
+    switch($cmd->getName()){
+      case 'tpworld':
+
+        if(!$s instanceof Player){
+          $s->sendMessage(self::PREFIX . ' §cPlease use this command in-game');
+          return false;
+        }
+  
+        if(!$s->hasPermission('easytp.command.tpworld') and !$s->hasPermission('easytp.command.*')){
+          $s->sendMessage(self::PREFIX . ' §cYou do not have permission to use this command');
+          return false;
+        }
+
+        if(!isset($args[0])){
+          $s->sendMessage(self::PREFIX . ' &cUsage: /tpworld [world]');
+          return false;
+        }
+
+        $worldname = $args[0];
+
+        if(!$this->getServer()->isLevelLoaded($worldname)){
+          $s->sendMessage(self::PREFIX . ' §cInvalid worldname');
+          return false;
+        }
+
+        $s->teleport($this->getServer()->getLevelByName($worldname)->getSpawnLocation());
+        $s->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('teleporting-msg'))));
     }
     return true;
   }

@@ -3,7 +3,7 @@
 # Use '&' for color
 
 # Version [DONT TOUCH]
-version: 1.1.0
+version: 1.2.0
 
 # List of levels where the commands of this plugin are banned
 blacklist-levels:
@@ -35,11 +35,19 @@ blacklisted-level-msg: "{PREFIX} &cThis command is banned in this level"
 tp-cooldown-msg: "{PREFIX} &cYou are on cooldown for {REMAINING} seconds"
 
 
+# Message sent when the player receiving the tpa request is not accepting request from any player [Use {RECEIVER} for the player receiving the request]
+tp-closed-msg: "{PREFIX} &c{RECEIVER} is not accepting tp requests from anyone"
+
+
+# Message sent when the player receiving the tpa request has blocked the request sender [Use {RECEIVER} for the player receiving the tp request]
+tp-blocked-msg: "{PREFIX} &c{RECEIVER} has blocked you from sending a tp request"
+
+
 # Message sent to the player sending the tpa request [Use {RECEIVER} for the player the tpa request is being sent to]
 tpa-request-sender-msg: "{PREFIX} &7You have sent a tpa request to &6{RECEIVER}"
 
 
-# Message sent to the player receiving the tpa request [USE {REQUESTER} for the player sending the tpa request]
+# Message sent to the player receiving the tpa request [Use {REQUESTER} for the player sending the tpa request]
 tpa-request-receiver-msg: "{PREFIX} &7You have received a tpa request from &6{REQUESTER}\n&7Do &6/tpaccept {REQUESTER} &7to accept the request or &6/tpdeny {REQUESTER} &7to deny the request"
 
 
@@ -47,11 +55,11 @@ tpa-request-receiver-msg: "{PREFIX} &7You have received a tpa request from &6{RE
 tpahere-request-sender-msg: "{PREFIX} &7You have sent a tpahere request to &6{RECEIVER}"
 
 
-# Message sent to the player receiving the tpahere request [USE {REQUESTER} for the player sending the tpahere request]
+# Message sent to the player receiving the tpahere request [Use {REQUESTER} for the player sending the tpahere request]
 tpahere-request-receiver-msg: "{PREFIX} &7You have received a tpahere request from &6{REQUESTER}\n&7Do &6/tpaccept {REQUESTER} &7to accept the request or &6/tpdeny {REQUESTER} &7to deny the request"
 
 
-# Message sent when no tp request exists from a player [USE {TARGET} for the player whoes tp request was being denied]
+# Message sent when no tp request exists from a player [Use {TARGET} for the player whoes tp request was being denied]
 no-tp-request-exists-msg: "{PREFIX} &cYou do not have a tp request from {TARGET}"
 
 
@@ -69,3 +77,31 @@ request-denied-receiver-msg: "{PREFIX} &cYou have denied a tp request from {REQU
 
 # Message sent to the request sender when the request receiver denies the request [Use {RECEIVER} for the player who denied the request]
 request-denied-requester-msg: "{PREFIX} &c{RECEIVER} has denied your tp request"
+
+
+# Message sent when a player opens his tp requests to everyone
+tp-turned-open-msg: "{PREFIX} &aYou have opened your tp requests to everyone"
+
+
+# Message sent when a player closes his tp requests to everyone
+tp-turned-close-msg: "{PREFIX} &cYou have closed your tp requests to everyone"
+
+
+# Message sent when a player blocks a player from sending a tp request [Use {BLOCKED_PLAYER} for the player who was blocked]
+blocked-player-msg: "{PREFIX} &aYou have successfully blocked &6{BLOCKED_PLAYER}"
+
+
+# Message sent when a player is already blocked
+already-blocked-msg: "{PREFIX} &cThis player is already blocked"
+
+
+# Message sent when a player unblocks a player from sending a tp request [Use {UNBLOCKED_PLAYER} for the player who was unblocked]
+unblocked-player-msg: "{PREFIX} &aYou have successfully unblocked &6{UNBLOCKED_PLAYER}"
+
+
+# Message sent when a player tries to withdraw a tp request in the absence of a existing tp request
+tp-request-absent-msg: "{PREFIX} &cYou do not have a pending tp request"
+
+
+# Message sent when a player successfully withdraws his/her tp request
+tp-request-withdrawn-msg: "{PREFIX} &aYou have successfully withdrawn your tp request"
