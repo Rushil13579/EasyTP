@@ -386,7 +386,7 @@ class EasyTP extends PluginBase implements Listener {
 
         if(!isset($args[0])){
           $s->sendMessage(self::PREFIX . ' §cUsage: /tpblock [player]');
-          return null;
+          return false;
         }
 
         if($this->getServer()->getPlayer($args[0]) === null){
@@ -428,7 +428,7 @@ class EasyTP extends PluginBase implements Listener {
 
         if(!isset($args[0])){
           $s->sendMessage(self::PREFIX . ' §cUsage: /tpblock [player]');
-          return null;
+          return false;
         }
 
         if($this->getServer()->getPlayer($args[0]) === null){
