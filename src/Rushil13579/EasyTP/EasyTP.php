@@ -40,7 +40,7 @@ class EasyTP extends PluginBase implements Listener {
   }
 
   public function versionCheck(){
-    if($this->cfg->get('version') !== '1.2.0'){
+    if($this->cfg->get('version') !== '1.3.0'){
       $this->getLogger()->warning(self::PREFIX . ' §cThe current configuration file is outdated. Please delete it and restart the server to install the latest configuration file!');
       $this->getServer()->getPluginManager()->disablePlugin($this);
     }
@@ -62,8 +62,8 @@ class EasyTP extends PluginBase implements Listener {
       return null;
     }
 
-    foreach(array_keys($this->cfg->get('blacklist-contains')) as $key){
-      if(strpos($this->cfg->get('blaclist-contains'), $player->getLevel()->getName())){
+    foreach($this->cfg->get('blacklist-contains') as $key){
+      if(strpos(strtolower($level), strtolower($key)) !== false){
         $player->sendMessage(C::colorize(str_replace('{PREFIX}', self::PREFIX, $this->cfg->get('blacklisted-level-msg'))));
         return null;
       }
@@ -74,8 +74,8 @@ class EasyTP extends PluginBase implements Listener {
   public function cooldownCheck($player){
     $tpcd = $this->cfg->get('tp-cooldown');
     if(!is_numeric($tpcd)){
-      $this->getLogger()->warning(self::PREFIX . ' §ctp-cooldown isn\'t numeric');
-      $player->sendMessage(self::PREFIX . ' §cError, please contact server administrators');
+      $this->getLogger()->warning('§ctp-cooldown isn\'t numeric');
+      $player->sendMessage('§cError, please contact server administrators');
       return null;
     }
 
