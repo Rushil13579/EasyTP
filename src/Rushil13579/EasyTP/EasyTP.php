@@ -134,13 +134,13 @@ class EasyTP extends PluginBase implements Listener {
     if($type == 'tpa'){
       $this->tp[$player->getName()] = ['tpa', $target->getName()];
       $player->sendMessage(C::colorize(str_replace(['{PREFIX}', '{RECEIVER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tpa-request-sender-msg'))));
-      $target->sendMessage(C::colorize(str_replace(['{PREFIX}', '{REQUESTER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tpa-request-receiver-msg'))));
+      $target->sendMessage(C::colorize(str_replace(['{PREFIX}', '{REQUESTER}'], [self::PREFIX, $player->getName()], $this->cfg->get('tpa-request-receiver-msg'))));
     }
 
     if($type == 'tpahere'){
       $this->tp[$player->getName()] = ['tpahere', $target->getName()];
       $player->sendMessage(C::colorize(str_replace(['{PREFIX}', '{RECEIVER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tpahere-request-sender-msg'))));
-      $target->sendMessage(C::colorize(str_replace(['{PREFIX}', '{REQUESTER}'], [self::PREFIX, $target->getName()], $this->cfg->get('tpahere-request-receiver-msg'))));
+      $target->sendMessage(C::colorize(str_replace(['{PREFIX}', '{REQUESTER}'], [self::PREFIX, $player->getName()], $this->cfg->get('tpahere-request-receiver-msg'))));
     }
   }
 
